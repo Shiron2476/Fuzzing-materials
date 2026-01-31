@@ -1,0 +1,115 @@
+/* Recursive algorithms and complex data structures */
+#include <stdio.h>
+#include <stdlib.h>
+
+// Binary tree node
+typedef struct TreeNode {
+    int data;
+    struct TreeNode* left;
+    struct TreeNode* right;
+} TreeNode;
+
+TreeNode* create_node(int data) {
+    TreeNode* node = malloc(sizeof(TreeNode));
+    if (node) {
+        node->data = data;
+        node->left = NULL;
+        node->right = NULL;
+    }
+    return node;
+}
+
+TreeNode* insert_bst(TreeNode* root, int data) {
+    if (root == NULL) {
+        return create_node(data);
+    }
+    
+    if (data < root->data) {
+        root->left = insert_bst(root->left, data);
+    } else if (data > root->data) {
+        root->right = insert_bst(root->right, data);
+    }
+    
+    return root;
+}
+
+void inorder_traversal(TreeNode* root) {
+    if (root != NULL) {
+        inorder_traversal(root->left);
+        printf("%d ", root->data);
+        inorder_traversal(root->right);
+    }
+}
+
+void free_tree(TreeNode* root) {
+    if (root != NULL) {
+        free_tree(root->left);
+        free_tree(root->right);
+        free(root);
+    }
+}
+
+// Fibonacci with memoization
+int fib_memo[100] = {0};
+
+int fibonacci(int n) {
+    if (n <= 1) return n;
+    if (fib_memo[n] != 0) return fib_memo[n];
+    fib_memo[n] = fibonacci(n-1) + fibonacci(n-2);
+    return fib_memo[n];
+}
+
+// Quick sort implementation
+void quicksort(int arr[], int low, int high) {
+    if (low < high) {
+        int pivot = arr[high];
+        int i = low - 1;
+        
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        
+        arr[i+1] = arr[high];
+        arr[high] = i+1;
+        
+        quicksort(arr, low, i);
+        quicksort(arr, i+2, high);
+    }
+}
+
+int main() {
+    // Test binary search tree
+    TreeNode* root = NULL;
+    int values[] = {50, 30, 70, 20, 40, 60, 80};
+    int size = sizeof(values) / sizeof(values[0]);
+    
+    for (int i = 0; i < size; i++) {
+        root = insert_bst(root, values[i]);
+    }
+    
+    printf("Inorder traversal: ");
+    inorder_traversal(root);
+    printf("\n");
+    
+    // Test fibonacci
+    printf("Fibonacci(10) = %d\n", fibonacci(10));
+    
+    // Test quicksort
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    quicksort(arr, 0, arr_size - 1);
+    
+    printf("Sorted array: ");
+    for (int i = 0; i < arr_size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    
+    free_tree(root);
+    return 0;
+}

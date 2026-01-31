@@ -1,0 +1,44 @@
+/* Function pointers and callback mechanisms */
+#include <stdio.h>
+
+// Function pointer typedef
+typedef int (*Operation)(int, int);
+
+int add(int a, int b) { return a + b; }
+int subtract(int a, int b) { return a - b; }
+int multiply(int a, int b) { return a * b; }
+int divide(int a, int b) { return b != 0 ? a / b : 0; }
+
+// Higher-order function using function pointer
+int calculate(Operation op, int x, int y) {
+    return op(x, y);
+}
+
+// Callback function
+void process_with_callback(int data, int (*callback)(int)) {
+    int result = callback(data);
+    printf("Processed %d -> %d\n", data, result);
+}
+
+int square(int x) { return x * x; }
+int cube(int x) { return x * x * x; }
+
+// Array of function pointers
+Operation operations[] = {add, subtract, multiply, divide};
+const char* op_names[] = {"Add", "Subtract", "Multiply", "Divide"};
+
+int main() {
+    int a = 10, b = 5;
+    
+    // Test different operations
+    for (int i = 0; i < 4; i++) {
+        int result = calculate(operations[i], a, b);
+        printf("%s(%d, %d) = %d\n", op_names[i], a, b, result);
+    }
+    
+    // Test callbacks
+    process_with_callback(5, square);
+    process_with_callback(3, cube);
+    
+    return 0;
+}

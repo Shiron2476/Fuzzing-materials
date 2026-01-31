@@ -1,0 +1,29 @@
+/* Complex control flow with loops and conditionals */
+#include <stdio.h>
+
+int process_array(int arr[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        if (arr[i] > 0) {
+            sum += arr[i];
+        } else if (arr[i] < 0) {
+            sum -= arr[i];
+        }
+    }
+    return sum;
+}
+
+int recursive_sum(int n) {
+    if (n <= 0) {
+        return 0;
+    }
+    return n + recursive_sum(n - 1);
+}
+
+int main() {
+    int numbers[] = {1, -2, 3, -4, 5};
+    int total = process_array(numbers, 5);
+    int rec_total = recursive_sum(10);
+    printf("Array sum: %d, Recursive sum: %d\n", total, rec_total);
+    return 0;
+}

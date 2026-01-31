@@ -1,0 +1,24 @@
+/* Deeply nested function calls */
+#include <stdio.h>
+
+int level4(int x) {
+    return x * 2;
+}
+
+int level3(int x) {
+    return level4(x) + 1;
+}
+
+int level2(int x) {
+    return level3(x) * 3;
+}
+
+int level1(int x) {
+    return level2(x) - 5;
+}
+
+int main() {
+    int result = level1(10);
+    printf("Nested result: %d\n", result);
+    return 0;
+}

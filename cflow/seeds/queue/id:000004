@@ -1,0 +1,49 @@
+/* Pointer operations and dynamic memory */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* create_string(const char* input) {
+    char* result = malloc(strlen(input) + 1);
+    if (result) {
+        strcpy(result, input);
+    }
+    return result;
+}
+
+void modify_through_pointer(int* ptr) {
+    if (ptr) {
+        *ptr = *ptr * 2;
+    }
+}
+
+int** create_matrix(int rows, int cols) {
+    int** matrix = malloc(rows * sizeof(int*));
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = malloc(cols * sizeof(int));
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = i * cols + j;
+        }
+    }
+    return matrix;
+}
+
+void free_matrix(int** matrix, int rows) {
+    for (int i = 0; i < rows; i++) {
+        free(matrix[i]);
+    }
+    free(matrix);
+}
+
+int main() {
+    char* str = create_string("Hello, World!");
+    int value = 42;
+    modify_through_pointer(&value);
+    
+    int** mat = create_matrix(3, 3);
+    free_matrix(mat, 3);
+    
+    printf("String: %s, Modified value: %d\n", str, value);
+    free(str);
+    return 0;
+}
