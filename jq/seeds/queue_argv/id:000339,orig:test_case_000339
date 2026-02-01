@@ -1,0 +1,1 @@
+[ label $if | range(10) | ., (select(. == 5) | break $if) ] @@

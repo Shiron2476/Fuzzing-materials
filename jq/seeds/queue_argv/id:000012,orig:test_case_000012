@@ -1,0 +1,1 @@
+@text,@json,([1,.]|@csv,@tsv),@html,@uri,@sh,(@base64|.,@base64d) @@

@@ -1,0 +1,1 @@
+[ foreach .[] as $try (1 as $catch | $catch - 1; . + $try; .) ] @@

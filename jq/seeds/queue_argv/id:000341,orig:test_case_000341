@@ -1,0 +1,1 @@
+1 as $foreach | 2 as $and | 3 as $or | { $foreach, $and, $or, a } @@
