@@ -1,0 +1,1 @@
+["foo",1] as $p | getpath($p), setpath($p; 20), delpaths([$p]) @@

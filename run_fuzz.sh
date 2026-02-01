@@ -15,7 +15,7 @@ MINUTES="$2"
 FUZZ_TIME=$((MINUTES * 60))
 
 # Base directories
-BASE_DIR="/zhq/experiment"
+BASE_DIR="/home/zhq/experiment"
 AFL_FUZZ_BIN="$BASE_DIR/ZigZagFuzz/afl-fuzz"
 MATERIALS_DIR="$BASE_DIR/materials/$TARGET_NAME"
 

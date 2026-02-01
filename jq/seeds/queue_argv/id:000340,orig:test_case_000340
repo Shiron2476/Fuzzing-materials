@@ -1,0 +1,1 @@
+reduce .[] as $then (4 as $else | $else; . as $elif | . + $then * $elif) @@

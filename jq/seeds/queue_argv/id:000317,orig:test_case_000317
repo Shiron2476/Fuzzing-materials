@@ -1,0 +1,1 @@
+(.. | select(type == "object" and has("b") and (.b | type) == "array")|.b) |= .[0] @@
