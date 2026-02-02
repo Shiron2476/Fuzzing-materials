@@ -1,0 +1,72 @@
+-A
+-b
+-C
+-d
+-e
+-E
+-f
+-F
+-g
+-H
+-l
+-m
+-M
+-N
+-n
+-R
+-s
+-v
+-x
+-X
+-y
+-Z
+--nofork
+--clean
+--help
+--version
+-c {command}
+-S {file}
+--cmd {command}
+-i {viminfo}
+-o[N]
+-O[N]
+-p[N]
+-r {file}
+-s {scriptin}
+-T {terminal}
+-u {vimrc}
+-U {gvimrc}
+-V[N]
+-w {scriptout}
+-W {scriptout}
+-x
+--remote {server}
+--remote-expr {expr}
+--remote-send {keys}
+--servername {name}
+--socketid {id}
+--startuptime {file}
+
+# === Common Argument Values for Templating (as per ZigZagFuzz paper) ===
+-c "set number"
+-c "set syntax=on"
+-S Session.vim
+-T xterm
+-T dumb
+-T ansi
+-u NONE
+-U NONE
+-V1
+-V10
+-V20
+-r NONE
+-i NONE
+-o1
+-o2
+-o4
+-O1
+-O2
+-O4
+-p1
+-p2
+-p4
