@@ -1,0 +1,8 @@
+havoc argv find : 0/0 : 0.00%
+splice argv find : 0/0 : 0.00%
+
+havoc argv comb finds : 0/0 : 0.00%
+havoc file find : 0/0 : 0.00%
+splice file find : 0/0 : 0.00%
+
+argv file crossover finds : 0/0 : 0.00%
