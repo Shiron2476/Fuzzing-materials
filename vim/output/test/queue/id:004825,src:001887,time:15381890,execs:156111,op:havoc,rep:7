@@ -1,0 +1,20 @@
+" Script to check if all the locales used in spell filesÿÿÿ available.m_supported, lang)
+  endmain.aap
+let not_s‹pported = []
+for item in getqflist()
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(nom_supported, lang)
+  endtry
+endfor
+
+if len(not_suprted) > 0
+  echo "Unsupported languag6s:"
+  for l in not_supported
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

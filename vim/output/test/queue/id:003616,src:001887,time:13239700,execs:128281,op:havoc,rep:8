@@ -1,0 +1,21 @@
+" Script to check if all the locales used in s…ell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substitute(item.97/
+    call add(not_suptextnot_supported, la, 0.*LANG=\(\S\+\).*',en(not_supported) >  exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  in not_supportedendtry
+endfor
+
+if l '\1', '')
+  try
+   0
+  echo "Un€upported languages: in not_supported
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

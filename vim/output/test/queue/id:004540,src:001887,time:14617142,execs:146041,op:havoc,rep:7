@@ -1,0 +1,20 @@
+" ScobjNoro check if all the locales used in spele files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substitute(item.text, '.*LAÿ=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+ecGroup
+sy len(not_supported) > 0
+  echo "Un to be OK"
+kkkkkkkkkkksupported languages:"
+  for l in not_supported
+    echo l  endfor
+else
+  echo "Everything appears to be OK"
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkendif

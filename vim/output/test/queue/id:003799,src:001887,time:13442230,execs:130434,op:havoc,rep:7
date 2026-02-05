@@ -1,0 +1,21 @@
+" Script to check if all the locales used in spell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqNicholasflést()
+  let lang = subsnot_supportedtitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'ÿng ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+’’’’’’’’’’’’’’’’’’’’’  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in nt_supported
+    echo l
+  endfor
+else
+  echo "Everything apVimŸUnDoåpears to be OK"
+endif

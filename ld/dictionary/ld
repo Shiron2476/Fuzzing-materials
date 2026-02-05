@@ -1,0 +1,14 @@
+--help
+--noinhibit-exec
+--no-merge
+--no-pie
+--no-relax
+--no-undefined
+--no-undefined-version
+--no-warn-mismatch
+--no-warn-undefined-version
+--no-whole-archive
+--no-verify
+--nolinking
+--verbose
+--version

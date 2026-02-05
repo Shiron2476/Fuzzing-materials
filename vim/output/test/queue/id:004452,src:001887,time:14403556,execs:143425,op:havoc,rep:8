@@ -1,0 +1,23 @@
+" Script to check if all tsed in spell files adarkyellowre available.
+
+greorteys env LANG/ */main.aap
+let \ot_supported = []
+for item in getqfltch /E197/
+ist(iwhiteeol)
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(noÿÿÿÿpported) > 0
+  echo "Unsuppp /sd languages:"
+  for l in not_supported
+    echo l
+  endfor
+else
+. lang
+  catything appears to be OK"
+endif

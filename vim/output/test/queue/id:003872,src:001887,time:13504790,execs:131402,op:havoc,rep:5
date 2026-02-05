@@ -1,0 +1,18 @@
+" Scriot to check if all the locales used in spell files are available.
+
+grep /ssssssssss000000000000000000000 LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, or l in not_supported
+    echo ot_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    echo l
+  endf<<<<<<<<<<<<<<<<<<<<<or
+else
+  echo "Everything appears to be OK"
+endif

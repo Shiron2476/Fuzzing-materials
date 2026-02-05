@@ -1,0 +1,24 @@
+" Scrip' . lang
+  catch /E197/
+   t to check kf all the locales used in spell files are available.
+
+grep /sys endtry
+endfoem.text, '.*LANG=eOPTnv LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substitute(item.text, <.*LANG=\(\S\+\).*', '\1', '')
+  try
+    eøe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfoem.text, '.*LANG=\(\S\+\).*',r
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

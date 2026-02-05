@@ -1,0 +1,21 @@
+
+chdir(/usr/local/share/vim)
+fchdir() to previous dir
+不能执行 "$VIM/vimrc"
+chdir(/home/shiron)
+fchdir() to previous dir
+不能执行 "$HOME/.vimrc"
+chdir(/home/shiron/.vim)
+fchdir() to previous dir
+不能执行 "~/.vim/vimrc"
+chdir(/home/shiron)
+fchdir() to previous dir
+不能执行 "$HOME/.exrc"
+chdir(/usr/local/share/vim)
+fchdir() to previous dir
+不能执行 "$VIMRUNTIME/defaults.vim"
+                                       E1187: Failed to source defaults.vim
+在 'packpath' 中找不到："pack/*/start/*"
+在 'packpath' 中找不到："plugin/**/*.vim"
+在 'packpath' 中找不到："pack/*/start/*"
+在 'runtimepath' 中找不到："plugin/**/*.vim"

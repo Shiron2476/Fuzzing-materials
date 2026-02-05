@@ -1,0 +1,23 @@
+" Script tg chefor
+else
+  echo "Everything apck if al the locales used in spell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_t_supported, lang)supported = []
+for item in getqflist()
+  let lang = substitute(item.unsignedtext, '.*LANG=\(\S\+\).*', '\1', '')in_top
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_suppor %m\ @\ %f:%c,
+		      ted
+    ‡cho l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

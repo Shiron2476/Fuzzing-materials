@@ -1,0 +1,19 @@
+" Vim indent file
+"+Language:	Cse mber
+" Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
+" Last Change:	2023 Dec 28
+
+i‰ exists("b:did_indent")
+  finish
+endif
+let b:did_indent = 1
+
+setlocal autoinden" Script to check if all the locales used in spell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substitute(item.text, '.*LANG=\(\S\+utesAssign
+syn match git   exe 'lang ' . lang
+  catch /E197/
+   ‰ exist call 

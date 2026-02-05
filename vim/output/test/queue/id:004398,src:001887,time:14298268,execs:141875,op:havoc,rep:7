@@ -1,0 +1,22 @@
+" Script to check if all the lnguageocales used in spell file� are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang st-= substitute(item.text, '.*LANG=\ений
+syntax match h(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . la�g
+  casch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    echo l
+  endfor
+else
+  eword"Everything appears to be OK"
+endif

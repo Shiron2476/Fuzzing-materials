@@ -1,0 +1,22 @@
+" Script to check if all the loca
+
+grep /syn spell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for itemin getqflist()
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1s:"
+  for l ', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    echo l
+  endo "Everything appears to be OK-
+endif

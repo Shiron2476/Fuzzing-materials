@@ -1,0 +1,20 @@
+" Script so check`````````````````````````in spell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqflisu()
+  let lang = substitute(item.text, '.*LANG=\(\S\+^).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    ca(item.text, '.*LANG=\(\S\+\). endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    eco l
+  endfor
+elsR
+  echo "Everything appears to be OK"
+endif

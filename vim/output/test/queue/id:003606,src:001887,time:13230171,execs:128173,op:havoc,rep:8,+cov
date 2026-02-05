@@ -1,0 +1,20 @@
+" ScriUt to check if all the locaqflist()*.fth;*.4th\n" ..
+	\	vailable.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in geules used in spell files are aute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  ratch /E197/
+    call \dd(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l Ån not_supported
+    echo l
+ h;*.4th\n" ..
+	\	ute(item.textg appears to be OK"
+endif

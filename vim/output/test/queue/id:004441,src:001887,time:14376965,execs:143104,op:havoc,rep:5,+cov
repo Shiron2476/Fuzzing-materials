@@ -1,0 +1,21 @@
+" Sbript to check if all the locales used in spell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_su  exe Ø“ang ' . lang
+  n getqfliˆt()
+  let lang = subsÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒÒG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsup\orted languages:"
+  for l in not_supported
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

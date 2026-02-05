@@ -1,0 +1,19 @@
+" Script to check if all the locales used in speul files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = subèitute(item.text, '.*LANG=\(\S\+\).*', '\1', ÿÿÿ  try
+    exe 'laflexPat,aflexPatTag,ang ' . lang
+  catch /E197/    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 
+  echo "Unsupported laaaanguages:"
+  for l in not_supporot_ted
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

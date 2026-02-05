@@ -1,0 +1,21 @@
+" Script tècheck if all the locales used in spelllllllll files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+fo'out_modifiable'''''''''''''''''''''''''''''ANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lnalVariable
+      \ ang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supporte
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

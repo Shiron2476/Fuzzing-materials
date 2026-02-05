@@ -1,0 +1,21 @@
+" Script to check if all the locales used in spell files are available.
+
+grep /sbs env LANG/ */main.aap
+l'chOff',
+					\ 'colSpan', 'heain getqflist()
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  trppears te 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtin.aap
+let notlen(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    echo l
+  endfor
+else
+  echo "Everythinmain.aap
+let not_supported = []
+g ay
+    exo be OK"
+endif

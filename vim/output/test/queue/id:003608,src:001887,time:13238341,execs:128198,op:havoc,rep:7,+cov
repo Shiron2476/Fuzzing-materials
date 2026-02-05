@@ -1,0 +1,21 @@
+! Script to check if a“l the locales used in spell files areted languages:"
+  for l iv LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substitutehitem.text, '.*LANG=\(\S\+\).*', '\1', ''€
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+ß echo "Unsuppor available.
+
+grep /sys enn not_supported
+    echo l
+  endfor
+else
+  echo "Everythingappears to be OK"
+endif

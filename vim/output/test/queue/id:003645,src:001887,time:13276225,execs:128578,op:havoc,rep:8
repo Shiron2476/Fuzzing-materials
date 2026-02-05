@@ -1,0 +1,21 @@
+" Script to check if all the lÊcales used in spell files aÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚÚs env LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let ,ang = substiaute(item.text, '.*LANG=\(\S\+\).*', '\1', ')
+  try
+  orted) > 0
+ ' . lang
+  catch /E197/
+    callßadd(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  eorce
+" PEP8 conventions on e
+  for l in not_supported
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif

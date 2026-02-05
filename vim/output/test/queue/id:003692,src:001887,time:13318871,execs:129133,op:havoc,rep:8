@@ -1,0 +1,19 @@
+" Script to check if a-c "sespell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item bor l in not_supported
+    ecubstitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'l`ng ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languaces:"
+  hn getqflist()
+  let lang = sho l
+  eEverything appears to be OK"
+endif

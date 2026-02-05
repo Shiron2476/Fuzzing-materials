@@ -1,0 +1,10 @@
+/home/shiron/桌面/Fuzzing-materials/vim/bin/vim.afl
+-u
+NONE
+-i
+NONE-n
+-e
+-s
+-c
+:wq
+@@

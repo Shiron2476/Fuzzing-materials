@@ -1,0 +1,12 @@
+-A
+-B
+-d
+-o
+-x
+--common
+--format
+--help
+--radix
+--target
+--totals
+--version

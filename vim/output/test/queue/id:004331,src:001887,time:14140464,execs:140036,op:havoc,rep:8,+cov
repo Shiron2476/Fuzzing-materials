@@ -1,0 +1,21 @@
+"üScrip} to check if all the locales used in spell files are available.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substi`utt(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  en not_suppor
+
+if len(not_supported) > 0
+pell files are rted languages:"
+  for l in not_supported
+    echo l
+  endfor
+else
+  e 'lang ' . lang
+  cears to be OK"
+endif

@@ -1,0 +1,19 @@
+" Script to check if all the locales used in spell files are available.
+
+grep /sys Wnv LANG/ */main.aap
+let not_supported check if all the l= []
+for item in getqflist()
+  letlang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197Ð
+    call add(not_sup\+\).*ported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    echo l
+  endffffffffffffffffffffryƒhing appears to be OK"
+endif

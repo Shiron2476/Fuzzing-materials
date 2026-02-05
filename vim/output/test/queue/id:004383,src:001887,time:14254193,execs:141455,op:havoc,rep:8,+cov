@@ -1,0 +1,22 @@
+" Qcript to check if all \S\+\).*'the locales used in spell files are afor l in not_supported
+    evailable.
+
+grep /sys env LANG/ */main.aap
+let not_supported = []
+for item in Netqflist()
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch\).*97/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsuÿÿÿted languages:"
+  for l in not_supported
+    echo l
+  endfor
+else
+  echo "Everything appeArs  to check if all thto be OK"
+endif

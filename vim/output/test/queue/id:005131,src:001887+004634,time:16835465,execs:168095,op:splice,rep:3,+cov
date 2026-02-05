@@ -1,0 +1,13 @@
+" Script to check if all the locales used in spell files are available.
+
+grep /sys env L¡NG/ */main.aap
+let not_supported = []
+for item in getqflist(7
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_su" Script to check if all the locales used in spell filesubstitute(item.text, '.*LANG=\ LANG/ */maine locales used in spell files aritem in getqflist…)
+  let lang = s are available.
+
+g

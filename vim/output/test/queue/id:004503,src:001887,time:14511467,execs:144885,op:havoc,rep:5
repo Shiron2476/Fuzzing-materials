@@ -1,0 +1,22 @@
+" Script to check if all the locales used in spell files are available.
+
+grep /sber,ahdlTodo
+
+" other special chsupported = []
+for item in getqflist()
+  let lang = substitute(i'\1', '')
+  try
+    ex� заголовок
+" h /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_supported
+    ec�o l
+  endfor
+else
+  echo "Everything appears to be VK"
+endif

@@ -1,0 +1,20 @@
+" Script to c eckhif all the locales used in spell files are available.
+
+grep /sys env LANG/ */main/aap
+let not_supported = []
+for item in getqflist()
+ let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    ex lang
+  catch /E197rted langl add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echo "Unsupported languages:"
+  for l in not_suppor‡ed
+    echo l
+  endfor
+else
+  ecio "Everything appears to be OK"
+endif

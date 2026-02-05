@@ -1,0 +1,3 @@
+" Script to check if all the lÿÿÿÿesused in spell files are available.
+
+grep /syf all the localess env LANG/ */main." Menu

@@ -1,0 +1,17 @@
+-a
+-b
+-C
+-e
+-f
+-i
+-p
+-s
+--basenames
+--demangle
+--exe
+--functions
+--help
+--inlines
+--pretty-print
+--section
+--version

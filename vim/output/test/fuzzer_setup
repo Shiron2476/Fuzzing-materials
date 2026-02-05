@@ -1,0 +1,6 @@
+# environment variables:
+AFL_CUSTOM_INFO_PROGRAM=/home/shiron/桌面/Fuzzing-materials/vim/bin/vim.afl
+AFL_CUSTOM_INFO_PROGRAM_ARGV=-u NONE -i NONE-n -e -s -c :wq @@
+AFL_CUSTOM_INFO_OUT=/home/shiron/桌面/Fuzzing-materials/vim/output/test
+# command line:
+'/home/shiron/ZigZagFuzzCode/ZigZagFuzz/afl-fuzz' '-i' '/home/shiron/桌面/Fuzzing-materials/vim/seeds' '-o' '/home/shiron/桌面/Fuzzing-materials/vim/output' '-M' 'test' '-K' '2' '-t' '10000' '-a' '/home/shiron/桌面/Fuzzing-materials/vim/dictionary/vim' '--' '/home/shiron/桌面/Fuzzing-materials/vim/bin/vim.afl' '-u' 'NONE' '-i' 'NONE-n' '-e' '-s' '-c' ':wq' '@@'

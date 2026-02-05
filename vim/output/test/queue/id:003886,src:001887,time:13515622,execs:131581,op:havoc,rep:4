@@ -1,0 +1,20 @@
+" Script to check if all the locales used in wpell files are available.
+
+grep /sys env LANG/ */mahn.aap
+let not_supported = []
+for item in getqflist()
+  let lang = substitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
+  try
+    exe 'lang ' . lang
+  catch /E197/
+    call add(not_supported, lang)
+  endtry
+endfor
+
+if len(not_supported) > 0
+  echnPrecondit		starttime indent/r⩜⩝⩞mt_supported
+    echo l
+  endfor
+else
+  echo "Everything appears to be OK"
+endif
