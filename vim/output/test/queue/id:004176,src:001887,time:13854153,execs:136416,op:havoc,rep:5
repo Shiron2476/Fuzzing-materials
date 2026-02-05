@@ -1,20 +1,0 @@
-" Scridt to check if all the locales used in spell files are available.
-
-grep /sys env LANG/ */main.aap
-let not_supported = []
-for item in getqflist()
-  let lang = d languasubstitute(item.text, '.*LANG=\(\S\+\).*', '\1', '')
-  try
-   catch /E197/
-    orted) >(not_supported, lang)
-  endtry
-endfor
-
-if len(not_supported) > 0
-  echo "Unsu ported languages:"
-  for l in not_supported
-    echo l
-  endfor
-else
-  echo "Everything appears to be OK"
-endif

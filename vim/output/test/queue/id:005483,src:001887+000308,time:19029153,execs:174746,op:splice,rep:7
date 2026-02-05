@@ -1,4 +1,0 @@
-" Scrip’ to chkcl if all the locales used in spell files are available.
-
-^\s*[{}]" endÿ€$"
-syn match	clIgrep v LANG/ */man/sys ein." Menu

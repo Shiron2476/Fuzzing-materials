@@ -1,3 +1,0 @@
-" Script to check if all th行行行行衑 locales used in spell files are available.
-
-grep /sys env LANG/ */main." Menu
