@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # run_fuzz.sh <target_name> <minutes>
 # Example: ./run_fuzz.sh cflow 60
 
@@ -36,46 +37,49 @@ if [ ! -f "$TARGET_BIN" ]; then
     exit 1
 fi
 
-if [ ! -d "$SEEDS_DIR" ] || [ -z "$(ls -A $SEEDS_DIR/queue)" ]; then
+if [ ! -d "$SEEDS_DIR" ] || [ -z "$(ls -A $SEEDS_DIR)" ]; then
     echo "Error: Seeds directory is missing or empty: $SEEDS_DIR"
     exit 1
 fi
 
-if [ ! -f "$DICT_FILE" ]; then
-    echo "Warning: Dictionary file not found: $DICT_FILE"
-else
+# Dictionary flag
+if [ -f "$DICT_FILE" ]; then
     DICT_FLAG="-x $DICT_FILE"
+else
+    DICT_FLAG=""
+    echo "Warning: Dictionary file not found: $DICT_FILE"
 fi
 
 echo "[*] Cleaning old output..."
 rm -rf "$OUTPUT_DIR"
 mkdir -p "$OUTPUT_DIR"
 
+# Start fuzzing instances in background
 for i in {1..5}; do
-    mkdir -p "$OUTPUT_DIR/run_$i"
     INSTANCE_OUTPUT="$OUTPUT_DIR/run_$i"
-    echo "正在启动第  $i 个独立模糊测试实例，输出目录:$INSTANCE_OUTPUT"
-CMD="
-	cd $BASE_OUTPUT_DIR/run_$i
-	mkdir -p table
-	cd table
-	timeout '${FUZZ_TIME}s' \
+    mkdir -p "$INSTANCE_OUTPUT"
+    
+    LOG_FILE="$INSTANCE_OUTPUT/fuzz.log"
+    
+    echo "正在启动第 $i 个独立模糊测试实例，输出目录: $INSTANCE_OUTPUT"
+    echo "日志将保存到: $LOG_FILE"
+    
+    # 构建命令（不使用 gnome-terminal）
+    CMD="cd '$INSTANCE_OUTPUT' && \
+         timeout '${FUZZ_TIME}s' \
 	'$AFL_FUZZ_BIN' \
 	-i '$SEEDS_DIR' \
 	-o '$OUTPUT_DIR' \
 	-K 2 \
 	-a '$DICT_FILE' \
-	-- '$TARGET_BIN' @@ ;
-            
-        echo '';
-        echo '=============================';
-        echo '模糊测试已结束（或被中断）。';
-        read -p '按回车键关闭此窗口...';
-    "
-    gnome-terminal --title="ZigZagFuzzer - Run  $i" -- bash -c " $CMD"
+	-- '$TARGET_BIN' @@ "
     
-    sleep 3  # 给 AFL++ 一点时间初始化
+    # 后台运行，并记录日志
+    bash -c "$CMD" > "$LOG_FILE" 2>&1 &
+    
+    sleep 3
 done
-echo "5 个独立的模糊测试实例已全部在新窗口中启动！"
-echo "输出目录:$OUTPUT_DIR/run_{1..5}"
 
+echo "5 个独立的模糊测试实例已全部在后台启动！"
+echo "输出目录: $OUTPUT_DIR/run_{1..5}"
+echo "查看日志: tail -f $OUTPUT_DIR/run_1/fuzz.log"
