@@ -44,9 +44,6 @@ fi
 
 # Dictionary flag
 if [ -f "$DICT_FILE" ]; then
-    DICT_FLAG="-x $DICT_FILE"
-else
-    DICT_FLAG=""
     echo "Warning: Dictionary file not found: $DICT_FILE"
 fi
 
