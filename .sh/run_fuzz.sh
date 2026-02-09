@@ -56,28 +56,29 @@ mkdir -p "$OUTPUT_DIR"
 
 # Start fuzzing instances in background
 for i in {1..5}; do
-    INSTANCE_OUTPUT="$OUTPUT_DIR/run_$i"
-    mkdir -p "$INSTANCE_OUTPUT"
+  INSTANCE_OUTPUT="$OUTPUT_DIR/run_$i"
+  mkdir -p "$INSTANCE_OUTPUT/table"
+  
+  echo "正在启动第 $i 个独立模糊测试实例，输出目录: $INSTANCE_OUTPUT"
+
+  # 进入 table 目录作为工作区
+  (
+    cd "$INSTANCE_OUTPUT/table" || exit 1
     
-    LOG_FILE="$INSTANCE_OUTPUT/fuzz.log"
-    
-    echo "正在启动第 $i 个独立模糊测试实例，输出目录: $INSTANCE_OUTPUT"
-    echo "日志将保存到: $LOG_FILE"
-    
-    # 构建命令（不使用 gnome-terminal）
-    CMD="cd '$INSTANCE_OUTPUT' && \
-         timeout '${FUZZ_TIME}s' \
-	'$AFL_FUZZ_BIN' \
-	-i '$SEEDS_DIR' \
-	-o '$OUTPUT_DIR' \
-	-K 2 \
-	-a '$DICT_FILE' \
-	-- '$TARGET_BIN' @@ "
-    
-    # 后台运行，并记录日志
-    bash -c "$CMD" > "$LOG_FILE" 2>&1 &
-    
-    sleep 3
+    # 关键：-o 必须使用绝对路径！
+    timeout "${FUZZ_TIME}s" \
+      "$AFL_FUZZ_BIN" \
+      -i "$SEEDS_DIR" \
+      -o "$INSTANCE_OUTPUT" \          
+      -M "${TARGET_NAME}_run_$i" \
+      -K 2 \
+      -a "$DICT_FILE" \
+      -- "$TARGET_BIN" @@ \
+      > "../fuzz.log" 2>&1            
+  ) &
+
+  echo " =>PID:$!"
+  sleep 2
 done
 
 echo "5 个独立的模糊测试实例已全部在后台启动！"
