@@ -28,7 +28,7 @@ fi
 
 TARGET_BIN="$MATERIALS_DIR/bin/${TARGET_NAME}.afl"
 SEEDS_DIR="$MATERIALS_DIR/seeds"
-DICT_FILE="$MATERIALS_DIR/dictionary/${TARGET_NAME}"
+DICT_FILE="$MATERIALS_DIR/dictionary/$TARGET_NAME"
 OUTPUT_DIR="$MATERIALS_DIR/output"
 
 # Validate essential files
@@ -64,13 +64,13 @@ for i in {1..5}; do
     
     # 关键：-o 必须使用绝对路径！
     timeout "${FUZZ_TIME}s" \
-      "$AFL_FUZZ_BIN" \
-      -i "$SEEDS_DIR" \
-      -o "$INSTANCE_OUTPUT" \          
-      -M "${TARGET_NAME}_run_$i" \
+      $AFL_FUZZ_BIN \
+      -i $SEEDS_DIR \
+      -o $INSTANCE_OUTPUT \          
+      -M ${TARGET_NAME}_run_$i \
       -K 2 \
-      -a "$DICT_FILE" \
-      -- "$TARGET_BIN" @@ \
+      -a $DICT_FILE \
+      -- $TARGET_BIN @@ \
       > "../fuzz.log" 2>&1            
   ) &
 
