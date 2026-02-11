@@ -1,7 +1,0 @@
-# .*
- .* Z9]+\] \.debug_line[ 	]+(PROGBITS|MIPS_DWARF)[ 	0LIB.*
-#...
- .* ZLbB.*
-#...
-.ÿ ZLIBOlt.*
-#pass

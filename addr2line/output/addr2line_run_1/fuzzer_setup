@@ -1,6 +1,0 @@
-# environment variables:
-AFL_CUSTOM_INFO_PROGRAM=/home/shiron/桌面/Fuzzing-materials/addr2line/bin/addr2line.afl
-AFL_CUSTOM_INFO_PROGRAM_ARGV=@@
-AFL_CUSTOM_INFO_OUT=/home/shiron/桌面/Fuzzing-materials/addr2line/output/addr2line_run_1
-# command line:
-'/home/shiron/ZigZagFuzzCode/ZigZagFuzz/afl-fuzz' '-i' '/home/shiron/桌面/Fuzzing-materials/addr2line/seeds' '-o' '/home/shiron/桌面/Fuzzing-materials/addr2line/output' '-K' '2' '-t' '5000' '-M' 'addr2line_run_1' '-F' '10240M' '-m' 'none' '-a' '/home/shiron/桌面/Fuzzing-materials/addr2line/dictionary/addr2line' '--' '/home/shiron/桌面/Fuzzing-materials/addr2line/bin/addr2line.afl' '@@'
