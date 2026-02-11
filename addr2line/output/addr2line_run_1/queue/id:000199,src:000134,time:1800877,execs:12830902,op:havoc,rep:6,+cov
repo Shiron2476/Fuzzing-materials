@@ -1,0 +1,13 @@
+#...
+ .* ZLIB.*
+"..N .
+ .* ZLIB.*
+#...
+ .* Z ZLIB.*
+"..N .
+ .* ZLIB.*
+#...
+ .* ZLI.*LI.* ZLIB.*
+#../
+ .* ZLIB.*
+#pass

@@ -1,0 +1,8 @@
+havoc argv find : 452/9301911 : 0.00%
+splice argv find : 81/8884316 : 0.00%
+
+havoc argv comb finds : 141/7930322 : 0.00%
+havoc file find : 1635/5184394 : 0.03%
+splice file find : 441/3992306 : 0.01%
+
+argv file crossover finds : 0/0 : 0.00%

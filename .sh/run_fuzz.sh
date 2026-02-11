@@ -61,7 +61,7 @@ for i in {1..5}; do
 	timeout "${FUZZ_TIME}s" \
 	"$AFL_FUZZ_BIN" \
 	-i "$SEEDS_DIR" \
-	-o "$OUTPUT_DIR" \
+	-o "$INSTANCE_OUTPUT" \
   -M "${TARGET_NAME}_run_$i" \
 	-K 2 \
 	-a "$DICT_FILE" \

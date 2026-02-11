@@ -1,0 +1,32 @@
+#.....
+ .* ZLIB.*
+#.
+ .* ZLIB.*
+#...
+ .* ZLIB.B.#
+#..>' .* ZLIB/*
+#*
+....
+ .* ZLIB.*
+#.
+ .* ZLIB.*
+#...
+ .* ZLIB.B.#
+#..>'&.* ZLIB/*
+#*
+#...
+ÿ ZLIB.*
+#pass
+..
+ .* ZLIB.*
+#...
+ .*+.* ZLIB.B.*
+#pass
+#...
+ÿ ZLIB.*
+#pass
+..
+ .*+.* ZLIB.B..
+ .* ZLIB.*
+#.*
+#pass
