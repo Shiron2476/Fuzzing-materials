@@ -1,8 +1,10 @@
 -A
 -B
+-G
 -d
 -o
 -x
+-t
 --common
 --format
 --help

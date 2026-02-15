@@ -11,6 +11,7 @@
 -s
 -w
 -x
+-d
 --add-gnu-debuglink
 --compress-debug-sections
 --decompress-debug-sections
