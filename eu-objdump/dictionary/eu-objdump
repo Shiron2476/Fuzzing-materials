@@ -1,0 +1,17 @@
+-d
+--disassemble
+-r
+--reloc
+-s
+--full-contents
+-j
+--section
+--color
+-?
+--help
+--usage
+-V
+--version
+red
+always
+auto
