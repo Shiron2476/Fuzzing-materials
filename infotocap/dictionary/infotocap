@@ -1,0 +1,48 @@
+-1
+-C
+-I
+-L
+-T
+-U
+-V
+-c
+-e
+-f
+-g
+-o
+-r
+-s
+-t
+-v
+-w
+-x
+--version
+@@
+xterm
+vt100
+linux
+screen
+ansi
+dumb
+xterm-256color
+xterm-88color
+rxvt
+konsole
+/tmp  # A common value for -o
+-v1
+-v2
+-v3
+-v4
+-v5
+-w60
+-w72
+-w80
+-w100
+-w132
+-1 -r
+-C -L
+-v -c
+-U -s
+-o /tmp
+-T xterm
+-T linux

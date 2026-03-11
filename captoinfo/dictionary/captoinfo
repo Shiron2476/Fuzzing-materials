@@ -1,0 +1,42 @@
+-1
+-C
+-I
+-L
+-T
+-U
+-V
+-c
+-e
+-f
+-g
+-o
+-r
+-s
+-t
+-v
+-w
+-x
+--version
+@@
+termcap
+terminfo
+xterm
+vt100
+linux
+screen
+ansi
+dumb
+-v1
+-v2
+-v3
+-v4
+-v5
+-w60
+-w72
+-w80
+-w100
+-w132
+-C -I
+-L -r
+-v -c
+-U -s

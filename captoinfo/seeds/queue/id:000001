@@ -1,0 +1,15 @@
+vt100|vt100-am|dec vt100 (w/advanced video):\
+	:am:bs:ms:xn:xo:\
+	:co#80:it#8:li#24:vt#3:\
+	:DO=\E[%dB:K1=\EOq:K2=\EOr:K3=\EOs:K4=\EOp:K5=\EOn:\
+	:LE=\E[%dD:RI=\E[%dC:UP=\E[%dA:ae=^O:as=^N:bl=^G:cd=50\E[J:\
+	:ce=3\E[K:cl=50\E[H\E[J:cm=5\E[%i%d;%dH:cr=\r:\
+	:cs=\E[%i%d;%dr:ct=\E[3g:do=\n:ho=\E[H:k0=\EOy:k1=\EOP:\
+	:k2=\EOQ:k3=\EOR:k4=\EOS:k5=\EOt:k6=\EOu:k7=\EOv:k8=\EOl:\
+	:k9=\EOw:kb=^H:kd=\EOB:ke=\E[?1l\E>:kl=\EOD:kr=\EOC:\
+	:ks=\E[?1h\E=:ku=\EOA:le=^H:mb=2\E[5m:md=2\E[1m:me=2\E[0m:\
+	:mr=2\E[7m:nd=2\E[C:rc=\E8:\
+	:rs=\E<\E>\E[?3;4;5l\E[?7;8h\E[r:\
+	:..sa=\E[0%?%p1%p6%|%t;1%;%?%p2%t;4%;%?%p1%p3%|%t;7%;%?%p4%t;5%;m%?%p9%t\016%e\017%;$<2>:\
+	:sc=\E7:se=2\E[m:sf=\n:so=2\E[7m:sr=5\EM:st=\EH:ta=^I:\
+	:ue=2\E[m:up=2\E[A:us=2\E[4m:

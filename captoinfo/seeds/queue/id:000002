@@ -1,0 +1,17 @@
+linux|linux console:\
+	:am:eo:mi:ms:xn:xo:\
+	:it#8:\
+	:AL=\E[%dL:DC=\E[%dP:DL=\E[%dM:DO=\E[%dB:IC=\E[%d@:\
+	:K2=\E[G:LE=\E[%dD:RI=\E[%dC:UP=\E[%dA:ae=^O:al=\E[L:as=^N:\
+	:bl=^G:cd=\E[J:ce=\E[K:cl=\E[H\E[J:cm=\E[%i%d;%dH:cr=\r:\
+	:cs=\E[%i%d;%dr:ct=\E[3g:dc=\E[P:dl=\E[M:do=\n:ec=\E[%dX:\
+	:ei=\E[4l:ho=\E[H:ic=\E[@:im=\E[4h:k1=\E[[A:k2=\E[[B:\
+	:k3=\E[[C:k4=\E[[D:k5=\E[[E:k6=\E[17~:k7=\E[18~:k8=\E[19~:\
+	:k9=\E[20~:kD=\E[3~:kI=\E[2~:kN=\E[6~:kP=\E[5~:kb=\177:\
+	:kd=\E[B:kh=\E[1~:kl=\E[D:kr=\E[C:ku=\E[A:le=^H:mb=\E[5m:\
+	:md=\E[1m:me=\E[m\017:mh=\E[2m:mr=\E[7m:nd=\E[C:nw=\r\n:\
+	:rc=\E8:\
+	:..sa=\E[0;10%?%p1%t;7%;%?%p2%t;4%;%?%p3%t;7%;%?%p4%t;5%;%?%p5%t;2%;%?%p6%t;1%;m%?%p9%t\016%e\017%;:\
+	:sc=\E7:se=\E[27m:sf=\n:so=\E[7m:sr=\EM:st=\EH:ta=^I:\
+	:ue=\E[24m:up=\E[A:us=\E[4m:vb=\E[?5h\E[?5l:\
+	:ve=\E[?25h\E[?0c:vi=\E[?25l\E[?1c:vs=\E[?25h\E[?8c:
