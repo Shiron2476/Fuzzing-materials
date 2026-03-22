@@ -10,9 +10,9 @@ fi
 
 TARGET_NAME="$1"
 
-MATERIALS_DIR="/home/zhq/experiment/materials/$TARGET_NAME"
+MATERIALS_DIR="/data/zhq/experiment/materials/$TARGET_NAME"
 SOURCE_OUTPUT_BASE="$MATERIALS_DIR/output"
-DEST_BASE="/home/zhq/experiment/ZigZagFuzz_experiment"
+DEST_BASE="/data/zhq/experiment/ZigZagFuzz_experiment"
 DEST_TARGET_DIR="$DEST_BASE/$TARGET_NAME"
 
 mkdir -p "$DEST_TARGET_DIR"
