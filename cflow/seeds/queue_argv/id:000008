@@ -1,0 +1,1 @@
+@@ --cpp --define=DEBUG --symbol=printf:identifier

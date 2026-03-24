@@ -1,0 +1,51 @@
+/* Preprocessor directives and macros */
+#include <stdio.h>
+
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define SQUARE(x) ((x) * (x))
+
+#ifdef DEBUG
+#define LOG(msg) printf("DEBUG: %s\n", msg)
+#else
+#define LOG(msg)
+#endif
+
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+
+// Conditional compilation
+#if defined(USE_EXTENDED_FEATURES)
+int extended_function(int x) {
+    return x * x * x;
+}
+#endif
+
+// Multi-line macro
+#define SWAP(a, b, type) do { \
+    type temp = a; \
+    a = b; \
+    b = temp; \
+} while(0)
+
+int main() {
+    int x = 10, y = 20;
+    printf("MAX(%d, %d) = %d\n", x, y, MAX(x, y));
+    printf("MIN(%d, %d) = %d\n", x, y, MIN(x, y));
+    printf("SQUARE(%d) = %d\n", 5, SQUARE(5));
+    
+    LOG("Starting main function");
+    
+    int arr[] = {1, 2, 3, 4, 5};
+    printf("Array size: %zu\n", ARRAY_SIZE(arr));
+    
+    printf("Before swap: x=%d, y=%d\n", x, y);
+    SWAP(x, y, int);
+    printf("After swap: x=%d, y=%d\n", x, y);
+    
+#if defined(USE_EXTENDED_FEATURES)
+    printf("Extended function result: %d\n", extended_function(3));
+#endif
+    
+    LOG("Ending main function");
+    return 0;
+}

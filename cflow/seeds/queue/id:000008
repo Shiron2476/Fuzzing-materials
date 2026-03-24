@@ -1,0 +1,65 @@
+/* System calls and file operations */
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <string.h>
+
+int read_file_content(const char* filename) {
+    FILE* file = fopen(filename, "r");
+    if (!file) {
+        perror("Error opening file");
+        return -1;
+    }
+    
+    char buffer[1024];
+    while (fgets(buffer, sizeof(buffer), file)) {
+        // Process file content
+        printf("File line: %s", buffer);
+    }
+    
+    fclose(file);
+    return 0;
+}
+
+int write_temp_file(const char* content) {
+    char temp_filename[] = "/tmp/cflow_test_XXXXXX";
+    int fd = mkstemp(temp_filename);
+    if (fd == -1) {
+        perror("Error creating temp file");
+        return -1;
+    }
+    
+    write(fd, content, strlen(content));
+    close(fd);
+    
+    // Clean up
+    unlink(temp_filename);
+    return 0;
+}
+
+void system_info() {
+    printf("Process ID: %d\n", getpid());
+    printf("Parent Process ID: %d\n", getppid());
+}
+
+int main() {
+    // Test file operations
+    write_temp_file("This is test content for cflow analysis\n");
+    
+    // Create a test file for reading
+    FILE* test_file = fopen("test_input.txt", "w");
+    if (test_file) {
+        fprintf(test_file, "Line 1\nLine 2\nLine 3\n");
+        fclose(test_file);
+        read_file_content("test_input.txt");
+        unlink("test_input.txt");
+    }
+    
+    // System information
+    system_info();
+    
+    return 0;
+}

@@ -1,0 +1,56 @@
+-C
+-I
+-L
+-r
+-T
+-U
+-V
+-c
+-d
+-e
+-f
+-g
+-n
+-q
+-s
+-t
+-u
+-v
+-w
+-x
+--color
+--color=always
+--color=never
+--color=auto
+--names
+--use-libtool
+--version
+@@
+xterm
+vt100
+linux
+screen
+ansi
+dumb
+xterm-256color
+xterm-88color
+rxvt
+konsole
+-v1
+-v2
+-v3
+-v4
+-v5
+-w60
+-w72
+-w80
+-w100
+-w132
+-C -I
+-L -r
+-v -c
+-v -d
+-u -x
+-q -s
+-T xterm
+-T linux

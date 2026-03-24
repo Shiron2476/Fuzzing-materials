@@ -1,0 +1,11 @@
+-a
+--all
+-e
+--encoding
+-f
+--print-file-name
+-n
+--bytes
+-o
+-t
+--radix

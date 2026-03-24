@@ -1,0 +1,61 @@
+/* Structures, unions, and typedefs */
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char name[50];
+    int age;
+    float salary;
+} Employee;
+
+typedef union {
+    int integer_val;
+    float float_val;
+    char string_val[20];
+} DataValue;
+
+typedef enum {
+    INT_TYPE,
+    FLOAT_TYPE,
+    STRING_TYPE
+} DataType;
+
+void print_employee(Employee emp) {
+    printf("Employee: %s, Age: %d, Salary: %.2f\n", 
+           emp.name, emp.age, emp.salary);
+}
+
+DataValue create_data_value(DataType type, void* value) {
+    DataValue dv;
+    switch (type) {
+        case INT_TYPE:
+            dv.integer_val = *(int*)value;
+            break;
+        case FLOAT_TYPE:
+            dv.float_val = *(float*)value;
+            break;
+        case STRING_TYPE:
+            strncpy(dv.string_val, (char*)value, 19);
+            dv.string_val[19] = '\0';
+            break;
+    }
+    return dv;
+}
+
+int main() {
+    Employee emp = {"John Doe", 30, 50000.0};
+    print_employee(emp);
+    
+    int int_val = 42;
+    float float_val = 3.14;
+    char str_val[] = "test";
+    
+    DataValue dv1 = create_data_value(INT_TYPE, &int_val);
+    DataValue dv2 = create_data_value(FLOAT_TYPE, &float_val);
+    DataValue dv3 = create_data_value(STRING_TYPE, str_val);
+    
+    printf("Union values: %d, %.2f, %s\n", 
+           dv1.integer_val, dv2.float_val, dv3.string_val);
+    
+    return 0;
+}

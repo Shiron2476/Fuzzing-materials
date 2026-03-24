@@ -1,0 +1,1 @@
+[.[] | try utf8bytelength catch .] @@

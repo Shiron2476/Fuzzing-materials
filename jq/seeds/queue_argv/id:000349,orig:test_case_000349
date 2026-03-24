@@ -1,0 +1,1 @@
+.[]|(try (if .=="hi" then . else error end) catch empty) | "\(.) there!" @@
