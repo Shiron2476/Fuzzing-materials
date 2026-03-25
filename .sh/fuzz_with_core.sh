@@ -29,7 +29,7 @@ fi
 TARGET_BIN="$MATERIALS_DIR/bin/${TARGET_NAME}.zzf"
 SEEDS_DIR="$MATERIALS_DIR/seeds"
 DICT_FILE="$MATERIALS_DIR/dictionary/${TARGET_NAME}"
-OUTPUT_DIR="/mnt/fuzz_ram/${TARGET_NAME}_output"
+OUTPUT_DIR="$MATERIALS_DIR/output"
 
 # Validate essential files
 if [ ! -f "$TARGET_BIN" ]; then
