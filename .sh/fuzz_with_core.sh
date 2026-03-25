@@ -48,7 +48,7 @@ else
     DICT_FLAG="-x $DICT_FILE"
 fi
 
-START_CORE=$( (GROUP_ID - 1) * 5  )
+START_CORE=$(( (GROUP_ID - 1) * 5  ))
 
 echo "[*] Cleaning old output..."
 rm -rf "$OUTPUT_DIR"
