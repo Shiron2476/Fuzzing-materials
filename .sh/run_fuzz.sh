@@ -15,9 +15,9 @@ MINUTES="$2"
 FUZZ_TIME=$((MINUTES * 60))
 
 # Base directories
-BASE_DIR="/data/zhq/experiment"
+BASE_DIR="/home/zhq/experiment"
 AFL_FUZZ_BIN="$BASE_DIR/ZigZagFuzz/afl-fuzz"
-MATERIALS_DIR="$BASE_DIR/materials/$TARGET_NAME"
+MATERIALS_DIR="$BASE_DIR/materials/Fuzzing-materials/$TARGET_NAME"
 
 # Validate materials directory exists
 if [ ! -d "$MATERIALS_DIR" ]; then
@@ -55,21 +55,21 @@ for i in {1..5}; do
     mkdir -p "$OUTPUT_DIR/run_$i"
     INSTANCE_OUTPUT="$OUTPUT_DIR/run_$i"
     echo "正在启动第  $i 个独立模糊测试实例，输出目录:$INSTANCE_OUTPUT"
-	cd $INSTANCE_OUTPUT
-	mkdir -p table
-	cd table
-	timeout "${FUZZ_TIME}s" \
-	"$AFL_FUZZ_BIN" \
-	-i "$SEEDS_DIR" \
-	-o "$INSTANCE_OUTPUT" \
+        cd $INSTANCE_OUTPUT
+        mkdir -p table
+        cd table
+        timeout "${FUZZ_TIME}s" \
+        "$AFL_FUZZ_BIN" \
+        -i "$SEEDS_DIR" \
+        -o "$INSTANCE_OUTPUT" \
   -M "${TARGET_NAME}_run_$i" \
-	-K 2 \
-	-a "$DICT_FILE" \
-	-- "$TARGET_BIN" @@ \
+        -K 2 \
+        -t 10000 \
+        -a "$DICT_FILE" \
+        -- "$TARGET_BIN" @@ \
   > "$INSTANCE_OUTPUT/fuzz.log" 2>&1 &
 echo " =>PID:$!"
 sleep 3  # 给 AFL++ 一点时间初始化
 done
 echo "5 个独立的模糊测试实例已全部在新窗口中启动！"
 echo "输出目录:$OUTPUT_DIR/run_{1..5}"
-

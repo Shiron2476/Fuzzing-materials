@@ -1,27 +1,29 @@
 #!/bin/bash
-# continue_fuzz.sh <target_name>
-# Predefined fuzz time: 1441 minutes (24 hours + 1 minute)
-# Continues fuzzing if current runtime is less than 95% of predefined time
+# run_fuzz.sh <target_name> <minutes>
+# 功能：启动模糊测试，如果检测到之前运行过，会自动计算剩余时间以补足到1441分钟。
+# 注意：虽然保留了<minutes>参数以兼容原逻辑，但核心逻辑现在强制对齐1441分钟的目标。
 
 set -e
 
+# ================= 配置区域 =================
+# 目标总运行时间：1441 分钟 (转换为秒)
+TARGET_TOTAL_MINUTES=1441
+TARGET_TOTAL_SECONDS=$((TARGET_TOTAL_MINUTES * 60))
+# =============================================
+
 if [ $# -ne 1 ]; then
-    echo "Usage: $0 <target_name>"
-    echo "Example: $0 tcpdump"
+    echo "Usage: $0 <target_name> "
+    echo "Example: $0 cflow"
+    echo "Note: Script calculates remaining time to reach ${TARGET_TOTAL_MINUTES} mins total."
     exit 1
 fi
 
 TARGET_NAME="$1"
-PREDEFINED_MINUTES=1441
-CONTINUE_THRESHOLD_PERCENT=95
-CONTINUE_THRESHOLD_MINUTES=$((PREDEFINED_MINUTES * CONTINUE_THRESHOLD_PERCENT / 100))  # 1368 minutes
-
-FUZZ_TIME=$((PREDEFINED_MINUTES * 60))  # Total fuzz time in seconds
 
 # Base directories
 BASE_DIR="/home/zhq/experiment"
 AFL_FUZZ_BIN="$BASE_DIR/ZigZagFuzz/afl-fuzz"
-MATERIALS_DIR="$BASE_DIR/materials/$TARGET_NAME"
+MATERIALS_DIR="$BASE_DIR/materials/Fuzzing-materials/$TARGET_NAME"
 
 # Validate materials directory exists
 if [ ! -d "$MATERIALS_DIR" ]; then
@@ -30,7 +32,10 @@ if [ ! -d "$MATERIALS_DIR" ]; then
 fi
 
 TARGET_BIN="$MATERIALS_DIR/bin/${TARGET_NAME}.afl"
+SEEDS_DIR="$MATERIALS_DIR/seeds"
+DICT_FILE="$MATERIALS_DIR/dictionary/${TARGET_NAME}"
 OUTPUT_DIR="$MATERIALS_DIR/output"
+AFL_SESSION_NAME="${TARGET_NAME}_run_"
 
 # Validate essential files
 if [ ! -f "$TARGET_BIN" ]; then
@@ -38,59 +43,86 @@ if [ ! -f "$TARGET_BIN" ]; then
     exit 1
 fi
 
-if [ ! -d "$OUTPUT_DIR" ] || [ ! -f "$OUTPUT_DIR/fuzzer_stats" ]; then
-    echo "Error: Output directory or fuzzer_stats file not found. Please run initial fuzzing first."
+if [ ! -d "$SEEDS_DIR" ] || [ -z "$(ls -A $SEEDS_DIR/queue 2>/dev/null)" ]; then
+    echo "Error: Seeds directory is missing or empty: $SEEDS_DIR"
     exit 1
 fi
 
-# Read current run_time from fuzzer_stats (in seconds)
-CURRENT_RUN_TIME_SECONDS=$(grep "^run_time" "$OUTPUT_DIR/fuzzer_stats" | cut -d':' -f2 | tr -d ' ')
-if [ -z "$CURRENT_RUN_TIME_SECONDS" ]; then
-    echo "Error: Could not read run_time from fuzzer_stats"
-    exit 1
-fi
-
-CURRENT_RUN_TIME_MINUTES=$((CURRENT_RUN_TIME_SECONDS / 60))
-echo "[*] Current run time: ${CURRENT_RUN_TIME_MINUTES} minutes"
-echo "[*] Continue threshold: ${CONTINUE_THRESHOLD_MINUTES} minutes (95% of ${PREDEFINED_MINUTES} minutes)"
-
-# Check if we should continue
-if [ "$CURRENT_RUN_TIME_MINUTES" -lt "$CONTINUE_THRESHOLD_MINUTES" ]; then
-    echo "[*] Continuing fuzzing..."
-    
-    # Find dictionary file (same logic as original script)
-    DICT_FILE="$MATERIALS_DIR/dictionary/${TARGET_NAME}"
-    if [ ! -f "$DICT_FILE" ]; then
-        echo "Warning: Dictionary file not found: $DICT_FILE"
-        DICT_FLAG=""
-    else
-        DICT_FLAG="-x $DICT_FILE"
-    fi
-    
-    # Launch 5 instances with -i - for continuation
-    for i in {1..5}; do
-        INSTANCE_OUTPUT="$OUTPUT_DIR/run_$i"
-        if [ ! -d "$INSTANCE_OUTPUT" ]; then
-            mkdir -p "$INSTANCE_OUTPUT"
-        fi
-        
-        echo "正在启动第 $i 个独立模糊测试实例（继续模式），输出目录:$INSTANCE_OUTPUT"
-        CMD="cd '$INSTANCE_OUTPUT'
-timeout '${FUZZ_TIME}s' '$AFL_FUZZ_BIN' \\
--i - \\
--o '$OUTPUT_DIR' \\
--K 2 \\
-$DICT_FLAG \\
--- '$TARGET_BIN' @@ ; echo ''; echo '============================='; echo '模糊测试已结束（或被中断）。'; read -p '按回车键关闭此窗口...'; "
-        
-        gnome-terminal --title="ZigZagFuzzer - Run $i (Continue)" -- bash -c "$CMD"
-        sleep 3
-    done
-    
-    echo "5 个独立的模糊测试实例已全部在新窗口中启动（继续模式）！"
-    echo "输出目录:$OUTPUT_DIR/run_{1..5}"
+if [ ! -f "$DICT_FILE" ]; then
+    echo "Warning: Dictionary file not found: $DICT_FILE"
+    DICT_FLAG=""
 else
-    echo "[*] Current run time (${CURRENT_RUN_TIME_MINUTES} minutes) >= threshold (${CONTINUE_THRESHOLD_MINUTES} minutes)"
-    echo "[*] Fuzzing completed or nearly completed. No continuation needed."
-    exit 0
+    DICT_FLAG="-x $DICT_FILE"
 fi
+
+# 如果输出目录不存在，先创建（避免检查 run_time 时报错）
+mkdir -p "$OUTPUT_DIR"
+
+# 函数：获取指定 run 目录的已运行时间
+get_elapsed_time() {
+    local stats_file="$1/fuzzer_stats"
+    local r_time=0
+
+    if [ -f "$stats_file" ]; then
+        # 2. 读取 run_time
+        # 使用 awk 读取第二列，并 +0 强制转为数字
+        r_time=$(grep "run_time" "$stats_file" | cut -d ':' -f 2 | tr -d ' \r')
+        if [ -z "$r_time" ]; then
+            r_time=0
+        fi
+    else
+        # 4. 调试打印：文件不存在 (输出到屏幕)
+        echo "   [调试数值] 文件不存在，返回默认值 0" >&2
+        r_time=0
+    fi
+
+    # 5. 关键：只返回纯数字 (作为函数返回值)
+    echo "$r_time"
+}
+echo "[*] 检查旧输出并计算剩余时间..."
+# 注意：这里不再强制 rm -rf，否则无法读取之前的 run_time。
+# 如果你希望每次彻底重来，请取消下面这行的注释：
+# rm -rf "$OUTPUT_DIR"
+# mkdir -p "$OUTPUT_DIR"
+
+for i in {1..5}; do
+    INSTANCE_OUTPUT="$OUTPUT_DIR/run_$i"
+    mkdir -p "$INSTANCE_OUTPUT"
+    ACTUAL_AFL_DIR="$INSTANCE_OUTPUT/${AFL_SESSION_NAME}${i}"
+    # 1. 获取已经运行的时间
+    ELAPSED=$(get_elapsed_time "$ACTUAL_AFL_DIR")
+    echo "   [调试] 读取到的已运行时间为: $ELAPSED 秒"
+    # 2. 计算剩余需要运行的时间
+    REMAINING=$((TARGET_TOTAL_SECONDS - ELAPSED))
+
+    # 3. 判断是否已经完成
+    if [ $REMAINING -le 0 ]; then
+        echo "=> 实例 run_$i 已达到目标时间 (${ELAPSED}s >= ${TARGET_TOTAL_SECONDS}s)，跳过。"
+        continue
+    fi
+
+    echo "正在启动/恢复第 $i 个实例..."
+    echo "   已运行: ${ELAPSED}s, 剩余目标: ${REMAINING}s (目标总计: ${TARGET_TOTAL_MINUTES}m)"
+
+    cd "$INSTANCE_OUTPUT"
+    mkdir -p table
+    cd table
+
+    # 使用计算出的 REMAINING 时间作为 timeout 参数
+    # 如果 REMAINING 很大，timeout 依然有效；如果任务意外退出，脚本不会无限重试，但这里逻辑是单次启动
+    timeout "${REMAINING}s" \
+        "$AFL_FUZZ_BIN" \
+        -i - \
+        -o "$INSTANCE_OUTPUT" \
+        -M "${AFL_SESSION_NAME}${i}" \
+        -K 2 \
+        -a "$DICT_FILE" \
+        -- "$TARGET_BIN" @@ \
+        > "$INSTANCE_OUTPUT/fuzz.log" 2>&1 &
+
+    echo " => PID: $!"
+    sleep 3  # 给 AFL++ 一点时间初始化
+done
+
+echo "模糊测试实例检查完毕。"
+echo "输出目录: $OUTPUT_DIR/run_{1..5}"
